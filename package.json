@@ -1,0 +1,17 @@
+{
+  "name": "mjml-server",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "bin": {
+    "mjml-server": "bin/mjml-server"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "html-crush": "^6.0.19",
+    "mjml": "^4.15.2",
+    "prettier": "^3.4.2"
+  }
+}
