@@ -39,10 +39,10 @@ const server = createServer((req, res) => {
 
   // enable cors
   if (process.env.CORS) {
-    res.header('Access-Control-Allow-Origin', process.env.CORS)
-    res.header('Access-Control-Allow-Headers', '*')
-    res.header('Access-Control-Allow-Methods', 'POST')
-    res.header('Access-Control-Max-Age', '-1')
+    res.setHeader('Access-Control-Allow-Origin', process.env.CORS)
+    res.setHeader('Access-Control-Allow-Headers', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'POST')
+    res.setHeader('Access-Control-Max-Age', '-1')
   }
 
   const bodyStream = [];
