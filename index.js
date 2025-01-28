@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { createServer } from 'node:http';
+import process from 'node:process';
 import os from 'node:os';
 import mjml2html from 'mjml';
 import prettier from 'prettier';
@@ -32,7 +33,7 @@ const server = createServer((req, res) => {
   // ensure content type is set
   if (!req.headers['content-type'] || !req.headers['content-type'].includes('application/json')) {
     res.statusCode = 500;
-    res.end('Content-Type must be set to application/json')
+    res.end('❌ Content-Type must be set to application/json')
     return;
   }
 
@@ -58,7 +59,7 @@ const server = createServer((req, res) => {
 
         if (data.mjml === undefined) {
           res.statusCode = 500;
-          res.end('You must provide a mjml key with the mjml content')
+          res.end('❌ You must provide a mjml key with the mjml content')
           return;
         }
 
@@ -94,14 +95,29 @@ const server = createServer((req, res) => {
         console.log('');
         console.error(ex);
         console.log('');
-        res.end('Someting went wrong, check the log for details');
+        res.end('❌ Someting went wrong, check the log for details');
       }
     });
 });
 
 server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+  console.log(`✅ Server running at http://${hostname}:${port}/`);
 });
+
+let callAmount = 0;
+process.on('SIGINT', stopServer);  // CTRL+C
+process.on('SIGQUIT', stopServer); // Keyboard quit
+process.on('SIGTERM', stopServer); // `kill` command
+
+function stopServer() {
+  if(callAmount < 1) {
+    console.log('');
+    console.log('✅ The server has been stopped');
+    console.log('');
+    setTimeout(() => process.exit(0), 1000);
+  }
+  callAmount++;
+}
 
 async function parseMjml({body, config, beautify, minify, minifyOptions}) {
   let { html } = mjml2html(body || '', config)
