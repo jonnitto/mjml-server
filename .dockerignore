@@ -1,6 +1,4 @@
 **/.git
 **/.gitignore
 **/node_modules
-**/.idea
-**./vscode
 **/test
