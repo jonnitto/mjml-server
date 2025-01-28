@@ -77,7 +77,7 @@ An api call should look like this:
   const mjml = '<mjml><mj-body><mj-section><mj-column><mj-text>Hello World</mj-text></mj-column></mj-section></mj-body></mjml>';
   const endpoint = 'http://YOUR_ENDPOINT';
   const port = '8080'
-  // Override configuration from enviroment and https://github.com/mjmlio/mjml/blob/master/packages/mjml-core/src/index.js#L101-L124
+  // Override configuration from enviroment or https://github.com/mjmlio/mjml/blob/master/packages/mjml-core/src/index.js#L101-L124
   const config = {
     beautify: false,
     minify: true,
