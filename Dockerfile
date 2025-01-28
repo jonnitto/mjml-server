@@ -24,10 +24,10 @@ RUN set -ex \
     && npm --env=production install
 
 COPY index.js ./index.js
+COPY healthcheck.js ./healthcheck.js
 USER node
-COPY healthcheck.sh /app/healthcheck.sh
 
-HEALTHCHECK --start-period=10s --retries=1 CMD /app/healthcheck.sh || exit 1
+HEALTHCHECK --start-period=10s --retries=1 CMD node healthcheck.js || exit 1
 
 EXPOSE 8080
 
