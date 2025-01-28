@@ -19,7 +19,7 @@ Due to GDPR / DSGVO reasons I required the mjml instance to be under my own cont
 Starting the image is as easy as running a test instance through docker
 
 ```sh
-docker run -it --rm carbon/mjml-server
+docker run -it --rm jonnitto/mjml-server
 ```
 
 or `docker-compose` with the following example:
@@ -27,7 +27,7 @@ or `docker-compose` with the following example:
 ```yml
 services:
   mjml:
-    image: carbon/mjml-server
+    image: jonnitto/mjml-server
     # environment:
     # to change the port:
     #   - PORT=8081
