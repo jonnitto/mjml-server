@@ -53,6 +53,7 @@ const server = createServer((req, res) => {
     })
     .on('end', async () => {
       const bufferData = Buffer.concat(bodyStream);
+      let errorMessage = '';
 
       try {
         const data = JSON.parse(bufferData);
@@ -84,18 +85,20 @@ const server = createServer((req, res) => {
           delete config.beautify;
         }
 
-        const html = await parseMjml({body, config, beautify, minify, minifyOptions});
+        const { html, strict, errors } = await parseMjml({body, config, beautify, minify, minifyOptions});
+        errorMessage = generateErrorMessage(errors);
+        if (strict && errorMessage) {
+          throw new Error('Validation failed');
+        }
+        if (errorMessage) {
+          generateLogMessage(bufferData, errorMessage, '❗️ Validation warning');
+        }
         res.end(html);
       } catch (ex) {
         res.statusCode = 400;
+        const message = generateLogMessage(bufferData, errorMessage, `❌ ${ex.toString()}`);
         res.setHeader('Content-Type', 'text/plain');
-        console.log('');
-        console.log('Received body');
-        console.log(bufferData.toString());
-        console.log('');
-        console.error(ex);
-        console.log('');
-        res.end('❌ Someting went wrong, check the log for details');
+        res.end(`${message}Check the log for more details`);
       }
     });
 });
@@ -109,10 +112,34 @@ process.on('SIGINT', stopServer);  // CTRL+C
 process.on('SIGQUIT', stopServer); // Keyboard quit
 process.on('SIGTERM', stopServer); // `kill` command
 
+function generateLogMessage(bufferData, message, title) {
+  let logMessage = '';
+
+  console.log('');
+  [title, message].filter(Boolean).forEach((text) => {
+    const output = `${text}\n\n`;
+    logMessage += output;
+    console.log(output);
+  });
+  console.log('Received body');
+  console.log(bufferData.toString());
+  console.log('');
+
+  return logMessage;
+}
+
+function generateErrorMessage(errors) {
+  if (!errors || !errors.length) {
+    return '';
+  }
+
+  return errors.map((error) => `Line ${error.line} in tag ${error.tagName}: ${error.message}`).join('\n');
+}
+
 function stopServer() {
   if(callAmount < 1) {
     console.log('');
-    console.log('✅ The server has been stopped');
+    console.log('🛑 The server has been stopped');
     console.log('');
     setTimeout(() => process.exit(0), 1000);
   }
@@ -120,7 +147,16 @@ function stopServer() {
 }
 
 async function parseMjml({body, config, beautify, minify, minifyOptions}) {
-  let { html } = mjml2html(body || '', config)
+  let strict = false;
+  if (config.validationLevel == 'strict') {
+    strict = true;
+    config.validationLevel = 'soft';
+  }
+  let { html, errors } = mjml2html(body || '', config);
+  if (!errors.length) {
+    errors = false;
+  }
+
   if (beautify) {
     html = await prettier.format(html, {
       parser: 'html',
@@ -133,5 +169,5 @@ async function parseMjml({body, config, beautify, minify, minifyOptions}) {
     html = crush(html, minifyOptions).result
   }
 
-  return html;
+  return { html, errors, strict };
 }
