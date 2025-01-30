@@ -45,6 +45,7 @@ The production defaults, without any override, default to:
 
 ```sh
 CORS ""
+MJML_CONFIG_CONIG "false"
 MJML_KEEP_COMMENTS "false"
 MJML_VALIDATION_LEVEL "soft"
 MJML_MINIFY "true"
@@ -68,6 +69,15 @@ HEALTHCHECK "false"
 ```
 
 This will escalate any issues you have with invalid mjml code to the docker log (`stdout` or `docker-compose logs`).
+
+## Install community components
+
+If you want to add community components you can define `MJML_CONFIG_CONIG` as `JSON`. If you want, for example add the
+`mj-chartjs` component, you can define the variable like this:
+
+```sh
+MJML_CONFIG_CONIG "{\"packages\":[\"mjml-chartjs/lib/MjChartjs.js\"]}"
+```
 
 ## API
 

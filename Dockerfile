@@ -8,6 +8,7 @@ ENV NODE_ENV=production
 ENV CORS=""
 ENV PORT=8080
 
+ENV MJML_CONFIG_CONIG=false
 ENV MJML_KEEP_COMMENTS=false
 ENV MJML_VALIDATION_LEVEL=soft
 ENV MJML_MINIFY=true
@@ -28,6 +29,10 @@ RUN set -ex \
 
 COPY index.js ./index.js
 COPY healthcheck.js ./healthcheck.js
+COPY onDockerStart.js ./onDockerStart.js
+RUN node onDockerStart.js
+RUN rm onDockerStart.js
+
 USER node
 
 HEALTHCHECK --start-period=10s --retries=1 CMD node healthcheck.js || exit 1
