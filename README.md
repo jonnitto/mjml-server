@@ -72,7 +72,7 @@ This will escalate any issues you have with invalid mjml code to the docker log 
 
 ## Install community components
 
-If you want to add [community components(https://documentation.mjml.io/#community-components)] you can define `MJML_CONFIG_CONIG` as `JSON`. If you want, for example add the
+If you want to add [community components](https://documentation.mjml.io/#community-components) you can define `MJML_CONFIG_CONIG` as `JSON`. If you want, for example add the
 `mj-chartjs` component, you can define the variable like this:
 
 ```sh
