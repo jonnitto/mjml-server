@@ -125,3 +125,32 @@ $response = $client->send($request);
 ```
 
 But you can use any language you want to create the request
+
+## Useage togehter with ddev
+
+I you use [ddev](https://ddev.com) for development like me, you can add this service like that:
+
+Create a file called `docker-compose.mjml.yaml` in you `.ddev` folder:
+
+```yaml
+services:
+  mjml:
+    container_name: ddev-${DDEV_SITENAME}-mjml
+    hostname: ${DDEV_SITENAME}-mjml
+    image: jonnitto/mjml-server
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    environment:
+      - CORS=*
+      - HEALTHCHECK=false
+```
+
+Add a enviroment variable in you `config.yaml`:
+
+```yaml
+web_environment:
+  - MJML_API_ENDPOINT=ddev-${DDEV_SITENAME}-mjml:8080
+```
+
+Now you can use the enviroment variable `MJML_API_ENDPOINT` as you endpoint.
