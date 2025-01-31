@@ -153,4 +153,4 @@ web_environment:
   - MJML_API_ENDPOINT=ddev-${DDEV_SITENAME}-mjml:8080
 ```
 
-Now you can use the enviroment variable `MJML_API_ENDPOINT` as you endpoint.
+Now you can use the enviroment variable `MJML_API_ENDPOINT` as your endpoint.
