@@ -13,6 +13,6 @@
   "dependencies": {
     "html-crush": "^6.0.19",
     "mjml": "^4.15.3",
-    "prettier": "^3.4.2"
+    "prettier": "^3.5.0"
   }
 }
