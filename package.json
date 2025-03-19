@@ -11,7 +11,7 @@
     "healthcheck": "node healthcheck.js"
   },
   "dependencies": {
-    "html-crush": "^6.0.19",
+    "html-crush": "^6.0.22",
     "mjml": "^4.15.3",
     "prettier": "^3.5.3"
   }
