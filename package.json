@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "html-crush": "^6.0.23",
-    "mjml": "^4.15.3",
+    "mjml": "^4.16.1",
     "prettier": "^3.6.2"
   }
 }
