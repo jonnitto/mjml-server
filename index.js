@@ -4,8 +4,6 @@ import { createServer } from 'node:http';
 import process from 'node:process';
 import os from 'node:os';
 import mjml2html from 'mjml';
-import prettier from 'prettier';
-import { crush } from 'html-crush';
 
 const hostname = os.hostname();
 const port = process.env.PORT || 8080;
@@ -65,7 +63,7 @@ const server = createServer((req, res) => {
         }
 
         const body = data.mjml;
-        const config = {...opts, ...data.config || {}};
+        const config = { ...opts, ...data.config || {} };
 
         let minify = doMinifiy;
         if (typeof config.minify === 'boolean') {
@@ -85,7 +83,7 @@ const server = createServer((req, res) => {
           delete config.beautify;
         }
 
-        const { html, strict, errors } = await parseMjml({body, config, beautify, minify, minifyOptions});
+        const { html, strict, errors } = await parseMjml({ body, config, beautify, minify, minifyOptions });
         errorMessage = generateErrorMessage(errors);
         if (strict && errorMessage) {
           throw new Error('Validation failed');
@@ -137,7 +135,7 @@ function generateErrorMessage(errors) {
 }
 
 function stopServer() {
-  if(callAmount < 1) {
+  if (callAmount < 1) {
     console.log('');
     console.log('🛑 The server has been stopped');
     console.log('');
@@ -146,27 +144,17 @@ function stopServer() {
   callAmount++;
 }
 
-async function parseMjml({body, config, beautify, minify, minifyOptions}) {
+async function parseMjml({ body, config, beautify, minify, minifyOptions }) {
   let strict = false;
   if (config.validationLevel == 'strict') {
     strict = true;
     config.validationLevel = 'soft';
   }
-  let { html, errors } = mjml2html(body || '', config);
+  config = { ...{}, ...config, beautify, minify, minifyOptions };
+  let { html, errors } = await mjml2html(body || '', config);
+
   if (!errors.length) {
     errors = false;
-  }
-
-  if (beautify) {
-    html = await prettier.format(html, {
-      parser: 'html',
-      printWidth: 240,
-      singleQuote: true,
-    });
-  }
-
-  if (minify) {
-    html = crush(html, minifyOptions).result
   }
 
   return { html, errors, strict };
