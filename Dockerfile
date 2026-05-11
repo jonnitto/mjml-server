@@ -1,4 +1,4 @@
-FROM node:25-alpine
+FROM node:26-alpine
 
 LABEL org.opencontainers.image.authors="Jon Uhlmann"
 LABEL org.opencontainers.image.description="Standalone mjml server, listening on port 8080/tcp."
