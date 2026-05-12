@@ -11,6 +11,6 @@
     "healthcheck": "node healthcheck.js"
   },
   "dependencies": {
-    "mjml": "^5.2.0"
+    "mjml": "^5.2.1"
   }
 }
