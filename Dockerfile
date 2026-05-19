@@ -25,7 +25,7 @@ RUN set -ex \
     && apk --no-cache upgrade \
     && apk --no-cache add curl ca-certificates \
     && update-ca-certificates \
-    && npm --env=production install
+    && npm install --omit=dev
 
 COPY index.js ./index.js
 COPY healthcheck.js ./healthcheck.js
