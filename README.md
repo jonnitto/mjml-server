@@ -44,6 +44,7 @@ services:
 The production defaults, without any override, default to:
 
 ```sh
+HOST "0.0.0.0"
 CORS ""
 MJML_CONFIG_CONIG "false"
 MJML_KEEP_COMMENTS "false"
@@ -54,6 +55,10 @@ HEALTHCHECK "true"
 CHARSET "utf8"
 DEFAULT_RESPONSE_CONTENT_TYPE "text/html; charset=utf-8"
 ```
+
+`HOST` is the address the server binds to. The default of `0.0.0.0` listens on every interface,
+which is what container runtimes expect. Set it to `127.0.0.1` to restrict the server to
+loopback.
 
 ## Development
 

@@ -2,10 +2,9 @@
 
 import { createServer } from 'node:http';
 import process from 'node:process';
-import os from 'node:os';
 import mjml2html from 'mjml';
 
-const hostname = os.hostname();
+const hostname = process.env.HOST || '0.0.0.0';
 const port = process.env.PORT || 8080;
 
 const opts = {
