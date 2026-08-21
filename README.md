@@ -56,9 +56,9 @@ CHARSET "utf8"
 DEFAULT_RESPONSE_CONTENT_TYPE "text/html; charset=utf-8"
 ```
 
-`HOST` is the address the server binds to. The default of `0.0.0.0` listens on every interface,
-which is what container runtimes expect. Set it to `127.0.0.1` to restrict the server to
-loopback.
+`HOST` is the IPv4 address the server binds to. The default of `0.0.0.0` listens on every
+interface, which is what container runtimes expect. Set it to `127.0.0.1` to restrict the server
+to loopback.
 
 ## Development
 
