@@ -11,7 +11,7 @@
     "healthcheck": "node healthcheck.js"
   },
   "dependencies": {
-    "cssnano": "^8.0.8",
+    "cssnano": "^9.0.1",
     "mjml": "^5.4.0"
   }
 }
